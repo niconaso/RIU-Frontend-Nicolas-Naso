@@ -5,7 +5,7 @@
 export const environment = {
   production: false,
   http: {
-    timeout: 10000,
+    api: 'https://localhost:3000',
     useMockData: true,
   },
 };

@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   http: {
-    timeout: 10000,
+    api: 'https://api.riu.com',
     useMockData: true,
   },
 };
