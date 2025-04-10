@@ -4,7 +4,9 @@
     "stylelint-config-prettier-scss"
   ],
   "rules": {
+    "comment-empty-line-before": null,
     "no-descending-specificity": null,
+    "scss/at-mixin-argumentless-call-parentheses": null,
     "scss/at-rule-no-unknown": [
       true,
       {
