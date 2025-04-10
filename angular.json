@@ -1,5 +1,8 @@
 {
   "$schema": "./node_modules/@angular/cli/lib/config/schema.json",
+  "cli": {
+    "analytics": "36194bf8-b520-4750-8108-07abbdfdbf05"
+  },
   "newProjectRoot": "projects",
   "projects": {
     "riu-heroes-manager": {
@@ -55,6 +58,12 @@
         "extract-i18n": {
           "builder": "@angular-devkit/build-angular:extract-i18n"
         },
+        "lint": {
+          "builder": "@angular-eslint/builder:lint",
+          "options": {
+            "lintFilePatterns": ["src/**/*.ts", "src/**/*.html"]
+          }
+        },
         "serve": {
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
@@ -95,8 +104,5 @@
       "sourceRoot": "src"
     }
   },
-  "version": 1,
-  "cli": {
-    "analytics": "36194bf8-b520-4750-8108-07abbdfdbf05"
-  }
+  "version": 1
 }
