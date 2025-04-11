@@ -2,7 +2,7 @@
   <!-- hero-form.component.html -->
   <form [formGroup]="form" (ngSubmit)="submit()">
     <div class="flex flex-col">
-      <mat-form-field>
+      <mat-form-field class="mb-3">
         <mat-label>Name</mat-label>
         <input id="name" formControlName="name" matInput appUppercase />
         @if (form.get("name")?.invalid) {
@@ -11,7 +11,7 @@
       </mat-form-field>
 
       <ng-container formGroupName="biography">
-        <mat-form-field>
+        <mat-form-field class="mb-3">
           <mat-label>Full Name</mat-label>
           <input id="fullName" formControlName="fullName" matInput />
           @if (form.get("fullName")?.invalid && form.get("fullName")?.touched) {
@@ -19,7 +19,7 @@
           }
         </mat-form-field>
 
-        <mat-form-field>
+        <mat-form-field class="mb-3">
           <mat-label>Alignment</mat-label>
           <mat-select id="alignment" formControlName="alignment">
             <mat-option value="good">Good</mat-option>
@@ -34,18 +34,18 @@
           }
         </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>publisher</mat-label>
+        <mat-form-field class="mb-3">
+          <mat-label>Publisher</mat-label>
           <input id="publisher" formControlName="publisher" matInput />
           @if (
             form.get("publisher")?.invalid && form.get("publisher")?.touched
           ) {
-            <mat-error>publisher is required.</mat-error>
+            <mat-error>Publisher is required.</mat-error>
           }
         </mat-form-field>
 
-        <mat-form-field>
-          <mat-label>firstAppearance</mat-label>
+        <mat-form-field class="mb-3">
+          <mat-label>First Appearance</mat-label>
           <input
             id="firstAppearance"
             formControlName="firstAppearance"
@@ -55,19 +55,19 @@
             form.get("firstAppearance")?.invalid &&
             form.get("firstAppearance")?.touched
           ) {
-            <mat-error>firstAppearance is required.</mat-error>
+            <mat-error>First Appearance is required.</mat-error>
           }
         </mat-form-field>
       </ng-container>
 
       <ng-container formGroupName="work">
-        <mat-form-field>
-          <mat-label>occupation</mat-label>
+        <mat-form-field class="mb-3">
+          <mat-label>Occupation</mat-label>
           <input id="occupation" formControlName="occupation" matInput />
           @if (
             form.get("occupation")?.invalid && form.get("occupation")?.touched
           ) {
-            <div>occupation is required.</div>
+            <div>Occupation is required.</div>
           }
         </mat-form-field>
       </ng-container>
