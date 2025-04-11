@@ -1,12 +1,30 @@
-<div>
-  <div class="flex flex-row justify-between items-center">
-    <app-searchbar
-      class="flex-1"
-      [placeholder]="'Filter heroes by name'"
-      (search)="onSearch($event)"
-    />
+<div
+  class="flex flex-row justify-between items-center sticky top-20 z-10 shadow rounded-2xl bg-white p-3"
+>
+  <app-searchbar
+    class="flex-1 mr-3"
+    [placeholder]="'Filter heroes by name'"
+    (search)="onSearch($event)"
+  />
 
-    <a mat-flat-button class="ml-4 mb-4" [routerLink]="['new']">New hero</a>
-  </div>
-  <app-hero-list [heroes]="(heroes$ | async)!" (delete)="onDelete($event)" />
+  <a mat-flat-button class="mb-4" [routerLink]="['new']">Create</a>
 </div>
+
+<app-hero-list
+  class="my-4"
+  [heroes]="(results$ | async)?.results!"
+  (delete)="onDelete($event)"
+/>
+
+@if ((results$ | async)?.total) {
+  <mat-paginator
+    class="sticky bottom-4 z-10"
+    aria-label="Select page"
+    [length]="(results$ | async)?.total || 0"
+    [pageIndex]="pageIndex$ | async"
+    [pageSize]="pageSize$ | async"
+    [pageSizeOptions]="[5, 10, 25, 100]"
+    (page)="onPageChange($event)"
+  >
+  </mat-paginator>
+}

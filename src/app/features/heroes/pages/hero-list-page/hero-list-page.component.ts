@@ -8,15 +8,15 @@ import {
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { MatPaginatorModule } from '@angular/material/paginator';
 import { RouterModule } from '@angular/router';
-import { BehaviorSubject, switchMap } from 'rxjs';
+import { BehaviorSubject, combineLatest, switchMap } from 'rxjs';
 import { ConfirmDialogComponent } from '../../../../shared/components';
 import { SearchbarComponent } from '../../../../shared/components/searchbar/searchbar.component';
 import { HeroListComponent } from '../../components';
 import { IHeroService } from '../../interfaces';
 import { Hero } from '../../models';
 import { HEROES_SERVICE } from '../../services';
-
 @Component({
   selector: 'app-hero-list-page',
   standalone: true,
@@ -28,6 +28,7 @@ import { HEROES_SERVICE } from '../../services';
     MatDialogModule,
     MatButtonModule,
     RouterModule,
+    MatPaginatorModule,
   ],
   templateUrl: './hero-list-page.component.html',
   styleUrl: './hero-list-page.component.scss',
@@ -38,11 +39,26 @@ export class HeroListPageComponent {
   #destroyRef = inject(DestroyRef);
   #dialog = inject(MatDialog);
 
-  #filterBy = new BehaviorSubject<string | null>(null);
-
-  heroes$ = this.#filterBy
+  #filterByBS = new BehaviorSubject<string | null>(null);
+  #filterBy$ = this.#filterByBS
     .asObservable()
-    .pipe(switchMap((filterBy) => this.#heroService.getAll(filterBy)));
+    .pipe(takeUntilDestroyed(this.#destroyRef));
+
+  pageSizeBS = new BehaviorSubject<number>(10);
+  pageSize$ = this.pageSizeBS.asObservable();
+
+  pageIndexBS = new BehaviorSubject<number>(0);
+  pageIndex$ = this.pageIndexBS.asObservable();
+
+  results$ = combineLatest([
+    this.#filterBy$,
+    this.pageSize$,
+    this.pageIndex$,
+  ]).pipe(
+    switchMap(([filterBy, pageSize, pageIndex]) =>
+      this.#heroService.getAll(pageIndex, pageSize, filterBy),
+    ),
+  );
 
   onDelete(hero: Hero) {
     const dialogRef = this.#dialog.open(ConfirmDialogComponent, {
@@ -60,7 +76,12 @@ export class HeroListPageComponent {
   }
 
   onSearch(search: string | null) {
-    this.#filterBy.next(search);
+    this.#filterByBS.next(search);
+  }
+
+  onPageChange(event: any) {
+    this.pageIndexBS.next(event.pageIndex);
+    this.pageSizeBS.next(event.pageSize);
   }
 
   private deleteHero(hero: Hero) {

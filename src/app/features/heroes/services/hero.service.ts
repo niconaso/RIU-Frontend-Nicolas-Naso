@@ -1,7 +1,8 @@
-import { HttpClient } from '@angular/common/http';
+import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { environment } from '../../../../environments/environment';
+import { PaginatedResponse } from '../../../shared/models';
 import { IHeroService } from '../interfaces';
 import { Hero } from '../models';
 
@@ -9,10 +10,23 @@ import { Hero } from '../models';
 export class HeroService implements IHeroService {
   #http: HttpClient = inject(HttpClient);
 
-  getAll(): Observable<Hero[]> {
+  getAll(
+    pageIndex: number,
+    pageSize: number,
+    filterBy?: string | null,
+  ): Observable<PaginatedResponse<Hero>> {
     const url = `${environment.http.api}/heroes`;
 
-    return this.#http.get<Hero[]>(url);
+    let params: HttpParams = new HttpParams()
+      .set('page', pageIndex.toString())
+      .set('limit', pageSize.toString());
+
+    if (filterBy) {
+      params = params.set('filterBy', filterBy);
+    }
+    return this.#http.get<PaginatedResponse<Hero>>(url, {
+      params,
+    });
   }
   get(id: number): Observable<Hero> {
     const url = `${environment.http.api}/heroes`;

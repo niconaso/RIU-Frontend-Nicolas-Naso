@@ -1,14 +1,22 @@
 import { Observable } from 'rxjs';
+import { PaginatedResponse } from '../../../shared/models';
 import { Hero } from '../models';
 
 export interface IHeroService {
   /**
-   * Get all heroes
    *
-   * @return {*}  {Observable<Hero[]>}
+   *
+   * @param {number} pageIndex
+   * @param {number} pageSize
+   * @param {(string | null)} [filterBy]
+   * @return {*}  { Observable<PaginatedResponse<Hero>>}
    * @memberof IHeroService
    */
-  getAll(filterBy?: string | null): Observable<Hero[]>;
+  getAll(
+    pageIndex: number,
+    pageSize: number,
+    filterBy?: string | null,
+  ): Observable<PaginatedResponse<Hero>>;
 
   /**
    * Get hero

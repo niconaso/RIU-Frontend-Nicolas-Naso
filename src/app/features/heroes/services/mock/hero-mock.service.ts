@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, map, Observable, of } from 'rxjs';
 import HEROES from '../../../../../../public/data/heroes.json';
+import { PaginatedResponse } from '../../../../shared/models';
 import { IHeroService } from '../../interfaces';
 import { Hero } from '../../models';
 
@@ -10,20 +11,26 @@ export class HeroMockService implements IHeroService {
     HEROES as Hero[],
   );
 
-  getAll(filterBy?: string): Observable<Hero[]> {
-    return this.#heroes
-      .asObservable()
-      .pipe(
-        map((heroes) =>
-          !filterBy
-            ? heroes
-            : heroes.filter((hero) =>
-                hero.name
-                  ?.toLocaleLowerCase()
-                  ?.includes(filterBy?.toLocaleLowerCase()),
-              ),
-        ),
-      );
+  getAll(
+    pageIndex: number,
+    pageSize: number,
+    filterBy?: string | null,
+  ): Observable<PaginatedResponse<Hero>> {
+    return this.#heroes.asObservable().pipe(
+      map((heroes) =>
+        !filterBy
+          ? heroes
+          : heroes.filter((hero) =>
+              hero.name
+                ?.toLocaleLowerCase()
+                ?.includes(filterBy?.toLocaleLowerCase()),
+            ),
+      ),
+      map((heroes: Hero[]) => ({
+        results: heroes.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize),
+        total: heroes.length,
+      })),
+    );
   }
   /**
    *
