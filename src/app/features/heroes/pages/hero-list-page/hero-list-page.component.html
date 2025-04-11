@@ -1,1 +1,4 @@
-<app-hero-list [heroes]="(heroes$ | async)!"></app-hero-list>
+<app-hero-list
+  [heroes]="(heroes$ | async)!"
+  (delete)="onDelete($event)"
+></app-hero-list>

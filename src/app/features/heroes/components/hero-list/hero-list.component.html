@@ -1,5 +1,7 @@
-@for (hero of heroes; track hero.id) {
-  {{ hero.name }}
-} @empty {
-  No heroes
-}
+<div class="flex flex-wrap gap-4">
+  @for (hero of heroes(); track hero.id) {
+    <app-hero [hero]="hero" (delete)="delete.emit($event)"></app-hero>
+  } @empty {
+    No heroes
+  }
+</div>
