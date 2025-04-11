@@ -9,6 +9,7 @@ import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
 import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { BehaviorSubject, combineLatest, switchMap } from 'rxjs';
 import { ConfirmDialogComponent } from '../../../../shared/components';
@@ -29,6 +30,7 @@ import { HEROES_SERVICE } from '../../services';
     MatButtonModule,
     RouterModule,
     MatPaginatorModule,
+    MatTooltipModule,
   ],
   templateUrl: './hero-list-page.component.html',
   styleUrl: './hero-list-page.component.scss',

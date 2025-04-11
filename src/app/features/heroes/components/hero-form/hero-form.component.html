@@ -74,7 +74,12 @@
 
       <div class="flex flex-row justify-between">
         <ng-content select="[cancel-button]"></ng-content>
-        <button type="submit" mat-flat-button [disabled]="form.invalid">
+        <button
+          type="submit"
+          mat-flat-button
+          matTooltip="Save Changes"
+          [disabled]="form.invalid"
+        >
           Save
         </button>
       </div>

@@ -18,6 +18,7 @@ import { MatOptionModule } from '@angular/material/core';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatSelectModule } from '@angular/material/select';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { UppercaseDirective } from '../../../../shared/directives';
 import { Hero } from '../../models';
 
@@ -33,6 +34,7 @@ import { Hero } from '../../models';
     MatSelectModule,
     MatOptionModule,
     UppercaseDirective,
+    MatTooltipModule,
   ],
   templateUrl: './hero-form.component.html',
   styleUrl: './hero-form.component.scss',

@@ -29,7 +29,11 @@
       </div>
     </div>
 
-    <button mat-icon-button (click)="onDelete(this.hero())">
+    <button
+      mat-icon-button
+      matTooltip="Delete: {{ hero().name }}"
+      (click)="onDelete(this.hero())"
+    >
       <mat-icon>delete</mat-icon>
     </button>
   </mat-card-header>
@@ -48,7 +52,13 @@
     </div>
   </mat-card-content>
   <mat-card-actions align="end">
-    <a mat-button [routerLink]="[hero().id, 'edit']"> Edit </a>
+    <a
+      mat-button
+      [routerLink]="[hero().id, 'edit']"
+      matTooltip="Edit: {{ hero().name }}"
+    >
+      Edit
+    </a>
   </mat-card-actions>
 </mat-card>
 

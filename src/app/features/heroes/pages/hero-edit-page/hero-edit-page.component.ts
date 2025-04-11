@@ -8,6 +8,7 @@ import {
   OnInit,
 } from '@angular/core';
 import { MatButtonModule } from '@angular/material/button';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router, RouterModule } from '@angular/router';
 import { Observable, tap } from 'rxjs';
 import { HeroFormComponent } from '../../components';
@@ -18,7 +19,13 @@ import { HEROES_SERVICE } from '../../services';
 @Component({
   selector: 'app-hero-edit-page',
   standalone: true,
-  imports: [HeroFormComponent, AsyncPipe, RouterModule, MatButtonModule],
+  imports: [
+    HeroFormComponent,
+    AsyncPipe,
+    RouterModule,
+    MatButtonModule,
+    MatTooltipModule,
+  ],
   templateUrl: './hero-edit-page.component.html',
   styleUrl: './hero-edit-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,

@@ -8,7 +8,13 @@
       }
     </h1>
     <app-hero-form [hero]="heroe$ | async" (save)="onSave($event)">
-      <a mat-stroked-button cancel-button [routerLink]="['/heroes']">Cancel</a>
+      <a
+        mat-stroked-button
+        cancel-button
+        matTooltip="Cancel changes"
+        [routerLink]="['/heroes']"
+        >Cancel</a
+      >
     </app-hero-form>
   </div>
 </div>

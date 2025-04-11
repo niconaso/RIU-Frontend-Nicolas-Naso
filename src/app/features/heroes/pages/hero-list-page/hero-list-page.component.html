@@ -7,7 +7,13 @@
     (search)="onSearch($event)"
   />
 
-  <a mat-flat-button class="mb-4" [routerLink]="['new']">Create</a>
+  <a
+    mat-flat-button
+    class="mb-4"
+    matTooltip="Create new Hero"
+    [routerLink]="['new']"
+    >Create</a
+  >
 </div>
 
 <app-hero-list

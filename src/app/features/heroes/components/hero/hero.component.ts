@@ -8,6 +8,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatCardModule } from '@angular/material/card';
 import { MatIconModule } from '@angular/material/icon';
+import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
 import { Hero } from '../../models';
 
@@ -22,6 +23,7 @@ import { Hero } from '../../models';
     RouterModule,
     NgOptimizedImage,
     TitleCasePipe,
+    MatTooltipModule,
   ],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss',
