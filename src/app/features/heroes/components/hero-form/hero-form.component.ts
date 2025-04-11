@@ -16,6 +16,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
+import { UppercaseDirective } from '../../../../shared/directives';
 import { Hero } from '../../models';
 
 @Component({
@@ -27,6 +28,7 @@ import { Hero } from '../../models';
     MatFormFieldModule,
     MatInputModule,
     MatButtonModule,
+    UppercaseDirective,
   ],
   templateUrl: './hero-form.component.html',
   styleUrl: './hero-form.component.scss',
