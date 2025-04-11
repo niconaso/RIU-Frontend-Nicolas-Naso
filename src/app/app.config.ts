@@ -5,11 +5,12 @@ import {
   withViewTransitions,
 } from '@angular/router';
 
-import { provideHttpClient } from '@angular/common/http';
+import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { environment } from '../environments/environment';
 import { routes } from './app.routes';
+import { loadingInterceptor } from './core/interceptors';
 import { HEROES_SERVICE, HeroService } from './features/heroes/services/';
 import { HeroMockService } from './features/heroes/services/mock/hero-mock.service';
 
@@ -18,8 +19,7 @@ export const appConfig: ApplicationConfig = {
     provideZoneChangeDetection({ eventCoalescing: true }),
     provideRouter(routes, withComponentInputBinding(), withViewTransitions()),
     provideAnimationsAsync(),
-    provideHttpClient(),
-
+    provideHttpClient(withInterceptors([loadingInterceptor])),
     {
       provide: HEROES_SERVICE,
       useFactory: () =>
