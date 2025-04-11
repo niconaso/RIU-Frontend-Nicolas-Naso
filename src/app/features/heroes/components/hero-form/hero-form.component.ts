@@ -53,7 +53,7 @@ export class HeroFormComponent implements OnInit {
       }),
       biography: this.#fb.group({
         fullName: this.#fb.control(this.hero()?.biography?.fullName || '', {
-          validators: [Validators.required, Validators.minLength(10)],
+          validators: [Validators.required, Validators.minLength(3)],
         }),
         alignment: this.#fb.control(this.hero()?.biography?.alignment || '', {
           validators: [Validators.required],
