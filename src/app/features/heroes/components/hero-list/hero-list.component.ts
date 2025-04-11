@@ -6,9 +6,9 @@ import {
   output,
 } from '@angular/core';
 import { RouterModule } from '@angular/router';
+import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state.component';
 import { Hero } from '../../models';
 import { HeroComponent } from '../hero/hero.component';
-import { EmptyStateComponent } from '../../../../shared/components/empty-state/empty-state.component';
 
 @Component({
   selector: 'app-hero-list',
