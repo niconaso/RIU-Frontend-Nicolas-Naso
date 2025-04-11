@@ -20,8 +20,13 @@
         </mat-form-field>
 
         <mat-form-field>
-          <mat-label>alignment</mat-label>
-          <input id="alignment" formControlName="alignment" matInput />
+          <mat-label>Alignment</mat-label>
+          <mat-select id="alignment" formControlName="alignment">
+            <mat-option value="good">Good</mat-option>
+            <mat-option value="bad">Bad</mat-option>
+            <mat-option value="-">Neutral</mat-option>
+          </mat-select>
+
           @if (
             form.get("alignment")?.invalid && form.get("alignment")?.touched
           ) {
