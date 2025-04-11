@@ -1,4 +1,9 @@
-<app-hero-list
-  [heroes]="(heroes$ | async)!"
-  (delete)="onDelete($event)"
-></app-hero-list>
+<div>
+  <app-searchbar
+    class="w-100"
+    [placeholder]="'Filter heroes by name'"
+    (search)="onSearch($event)"
+  />
+
+  <app-hero-list [heroes]="(heroes$ | async)!" (delete)="onDelete($event)" />
+</div>

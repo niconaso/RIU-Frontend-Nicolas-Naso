@@ -8,7 +8,7 @@ export interface IHeroService {
    * @return {*}  {Observable<Hero[]>}
    * @memberof IHeroService
    */
-  getAll(): Observable<Hero[]>;
+  getAll(filterBy?: string | null): Observable<Hero[]>;
 
   /**
    * Get hero

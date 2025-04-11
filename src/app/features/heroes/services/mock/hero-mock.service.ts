@@ -1,5 +1,5 @@
 import { Injectable } from '@angular/core';
-import { BehaviorSubject, Observable, of } from 'rxjs';
+import { BehaviorSubject, map, Observable, of } from 'rxjs';
 import HEROES from '../../../../../../public/data/heroes.json';
 import { IHeroService } from '../../interfaces';
 import { Hero } from '../../models';
@@ -8,9 +8,28 @@ import { Hero } from '../../models';
 export class HeroMockService implements IHeroService {
   #heroes: BehaviorSubject<Hero[]> = new BehaviorSubject<Hero[]>(HEROES);
 
-  getAll(): Observable<Hero[]> {
-    return this.#heroes.asObservable();
+  getAll(filterBy?: string): Observable<Hero[]> {
+    return this.#heroes
+      .asObservable()
+      .pipe(
+        map((heroes) =>
+          !filterBy
+            ? heroes
+            : heroes.filter((hero) =>
+                hero.name
+                  ?.toLocaleLowerCase()
+                  ?.includes(filterBy?.toLocaleLowerCase()),
+              ),
+        ),
+      );
   }
+  /**
+   *
+   *
+   * @param {number} id
+   * @return {*}  {Observable<Hero>}
+   * @memberof HeroMockService
+   */
   get(id: number): Observable<Hero> {
     const hero = this.#heroes.getValue().find((hero) => hero.id === id);
     return of(hero!);
