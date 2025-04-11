@@ -42,12 +42,19 @@ export class HeroMockService implements IHeroService {
     return of(newHero);
   }
 
-  update(hero: Hero): Observable<Hero> {
-    this.#heroes.next(
-      this.#heroes.getValue().map((h) => (h.id === hero.id ? hero : h)),
+  update(updatedHero: Hero): Observable<Hero> {
+    const heroes = this.#heroes.getValue().map((hero) =>
+      hero.id === updatedHero.id
+        ? {
+            ...hero,
+            ...updatedHero,
+          }
+        : hero,
     );
 
-    return of(hero);
+    this.#heroes.next(heroes);
+
+    return of(updatedHero);
   }
   delete(id: number): Observable<void> {
     this.#heroes.next(this.#heroes.getValue().filter((h) => h.id !== id));

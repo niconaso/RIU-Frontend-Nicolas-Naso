@@ -1,1 +1,7 @@
-{{ heroe$ | async | json }}
+<div>
+  <div class="w-4/5 m-auto">
+    <app-hero-form [hero]="heroe$ | async" (save)="onSave($event)">
+      <a mat-stroked-button cancel-button [routerLink]="['/heroes']">Cancel</a>
+    </app-hero-form>
+  </div>
+</div>

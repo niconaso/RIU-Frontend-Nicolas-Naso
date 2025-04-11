@@ -1,4 +1,4 @@
-import { NgOptimizedImage, TitleCasePipe } from '@angular/common';
+import { CommonModule, NgOptimizedImage, TitleCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -15,6 +15,7 @@ import { Hero } from '../../models';
   selector: 'app-hero',
   standalone: true,
   imports: [
+    CommonModule,
     MatCardModule,
     MatButtonModule,
     MatIconModule,

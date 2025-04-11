@@ -26,7 +26,7 @@ export interface IHeroService {
    * @return {*}  {Observable<Hero>}
    * @memberof IHeroService
    */
-  create(hero: Hero): Observable<Hero>;
+  create(hero: Partial<Hero>): Observable<Hero>;
 
   /**
    * Update hero
@@ -35,7 +35,7 @@ export interface IHeroService {
    * @return {*}  {Observable<Hero>}
    * @memberof IHeroService
    */
-  update(hero: Hero): Observable<Hero>;
+  update(hero: Partial<Hero>): Observable<Hero>;
 
   /**
    * Delete hero

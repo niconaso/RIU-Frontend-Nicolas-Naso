@@ -1,15 +1,27 @@
 <mat-card class="min-w-80 size-100 md:size-80 flex flex-col justify-between">
   <mat-card-header class="flex flex-row justify-between">
     <div class="flex flex-row justify-start items-center flex-1">
-      <img
-        mat-card-avatar
-        class="mr-3"
-        width="160"
-        height="240"
-        priority
-        [alt]="hero().name"
-        [ngSrc]="hero().images.sm"
-      />
+      @if (hero().images) {
+        <img
+          mat-card-avatar
+          class="mr-3"
+          width="160"
+          height="240"
+          priority
+          [alt]="hero().name"
+          [ngSrc]="hero().images.sm"
+        />
+      } @else {
+        <img
+          mat-card-avatar
+          class="mr-3"
+          width="160"
+          height="240"
+          priority
+          ngSrc="https://placehold.co/160x240"
+          [alt]="'No image'"
+        />
+      }
 
       <div>
         <mat-card-title>{{ hero().name }} </mat-card-title>
@@ -39,3 +51,5 @@
     <a mat-button [routerLink]="[hero().id, 'edit']"> Edit </a>
   </mat-card-actions>
 </mat-card>
+
+<ng-template #avatarTpl let-image let-name> </ng-template>
