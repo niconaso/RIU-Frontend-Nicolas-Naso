@@ -6,7 +6,9 @@ import {
   inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { BehaviorSubject, switchMap } from 'rxjs';
+import { ConfirmDialogComponent } from '../../../../shared/components';
 import { SearchbarComponent } from '../../../../shared/components/searchbar/searchbar.component';
 import { HeroListComponent } from '../../components';
 import { IHeroService } from '../../interfaces';
@@ -16,13 +18,21 @@ import { HEROES_SERVICE } from '../../services';
 @Component({
   selector: 'app-hero-list-page',
   standalone: true,
-  imports: [CommonModule, AsyncPipe, HeroListComponent, SearchbarComponent],
+  imports: [
+    CommonModule,
+    AsyncPipe,
+    HeroListComponent,
+    SearchbarComponent,
+    MatDialogModule,
+  ],
   templateUrl: './hero-list-page.component.html',
   styleUrl: './hero-list-page.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
 export class HeroListPageComponent {
   #heroService: IHeroService = inject(HEROES_SERVICE);
+  #destroyRef = inject(DestroyRef);
+  #dialog = inject(MatDialog);
 
   #filterBy = new BehaviorSubject<string | null>(null);
 
@@ -30,17 +40,29 @@ export class HeroListPageComponent {
     .asObservable()
     .pipe(switchMap((filterBy) => this.#heroService.getAll(filterBy)));
 
-  #destroyRef = inject(DestroyRef);
-
   onDelete(hero: Hero) {
-    console.log(hero);
-    this.#heroService
-      .delete(hero.id)
-      .pipe(takeUntilDestroyed(this.#destroyRef))
-      .subscribe();
+    const dialogRef = this.#dialog.open(ConfirmDialogComponent, {
+      data: {
+        title: 'Delete hero',
+        message: `Are you sure you want to delete ${hero.name}?`,
+      },
+    });
+
+    dialogRef.afterClosed().subscribe((result) => {
+      if (result) {
+        this.deleteHero(hero);
+      }
+    });
   }
 
   onSearch(search: string | null) {
     this.#filterBy.next(search);
+  }
+
+  private deleteHero(hero: Hero) {
+    this.#heroService
+      .delete(hero.id)
+      .pipe(takeUntilDestroyed(this.#destroyRef))
+      .subscribe();
   }
 }
