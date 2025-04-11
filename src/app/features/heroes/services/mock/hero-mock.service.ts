@@ -6,7 +6,9 @@ import { Hero } from '../../models';
 
 @Injectable()
 export class HeroMockService implements IHeroService {
-  #heroes: BehaviorSubject<Hero[]> = new BehaviorSubject<Hero[]>(HEROES);
+  #heroes: BehaviorSubject<Hero[]> = new BehaviorSubject<Hero[]>(
+    HEROES as Hero[],
+  );
 
   getAll(filterBy?: string): Observable<Hero[]> {
     return this.#heroes

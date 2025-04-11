@@ -1,3 +1,4 @@
+import { NgOptimizedImage, TitleCasePipe } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
@@ -13,7 +14,14 @@ import { Hero } from '../../models';
 @Component({
   selector: 'app-hero',
   standalone: true,
-  imports: [MatCardModule, MatButtonModule, MatIconModule, RouterModule],
+  imports: [
+    MatCardModule,
+    MatButtonModule,
+    MatIconModule,
+    RouterModule,
+    NgOptimizedImage,
+    TitleCasePipe,
+  ],
   templateUrl: './hero.component.html',
   styleUrl: './hero.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
