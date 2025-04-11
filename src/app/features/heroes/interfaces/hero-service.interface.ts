@@ -41,8 +41,8 @@ export interface IHeroService {
    * Delete hero
    *
    * @param {number} id
-   * @return {*}  {Observable<Hero>}
+   * @return {*}  {Observable<void>}
    * @memberof IHeroService
    */
-  delete(id: number): Observable<Hero>;
+  delete(id: number): Observable<void>;
 }

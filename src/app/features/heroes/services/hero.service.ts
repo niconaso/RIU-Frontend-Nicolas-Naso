@@ -30,9 +30,9 @@ export class HeroService implements IHeroService {
 
     return this.#http.put<Hero>(`${url}`, hero);
   }
-  delete(id: number): Observable<Hero> {
+  delete(id: number): Observable<void> {
     const url = `${environment.http.api}/heroes/${id}`;
 
-    return this.#http.delete<Hero>(`${url}`);
+    return this.#http.delete<void>(`${url}`);
   }
 }
