@@ -1,9 +1,12 @@
 <div>
-  <app-searchbar
-    class="w-100"
-    [placeholder]="'Filter heroes by name'"
-    (search)="onSearch($event)"
-  />
+  <div class="flex flex-row justify-between items-center">
+    <app-searchbar
+      class="flex-1"
+      [placeholder]="'Filter heroes by name'"
+      (search)="onSearch($event)"
+    />
 
+    <a mat-flat-button class="ml-4 mb-4" [routerLink]="['new']">New hero</a>
+  </div>
   <app-hero-list [heroes]="(heroes$ | async)!" (delete)="onDelete($event)" />
 </div>

@@ -6,7 +6,9 @@ import {
   inject,
 } from '@angular/core';
 import { takeUntilDestroyed } from '@angular/core/rxjs-interop';
+import { MatButtonModule } from '@angular/material/button';
 import { MatDialog, MatDialogModule } from '@angular/material/dialog';
+import { RouterModule } from '@angular/router';
 import { BehaviorSubject, switchMap } from 'rxjs';
 import { ConfirmDialogComponent } from '../../../../shared/components';
 import { SearchbarComponent } from '../../../../shared/components/searchbar/searchbar.component';
@@ -24,6 +26,8 @@ import { HEROES_SERVICE } from '../../services';
     HeroListComponent,
     SearchbarComponent,
     MatDialogModule,
+    MatButtonModule,
+    RouterModule,
   ],
   templateUrl: './hero-list-page.component.html',
   styleUrl: './hero-list-page.component.scss',
