@@ -49,31 +49,26 @@ export class HeroFormComponent implements OnInit {
   ngOnInit() {
     this.form = this.#fb.group({
       name: this.#fb.control(this.hero()?.name || '', {
-        nonNullable: true,
-        validators: [Validators.required],
+        validators: [Validators.required, Validators.minLength(3)],
       }),
       biography: this.#fb.group({
         fullName: this.#fb.control(this.hero()?.biography?.fullName || '', {
-          nonNullable: true,
-          validators: [Validators.required],
+          validators: [Validators.required, Validators.minLength(10)],
         }),
         alignment: this.#fb.control(this.hero()?.biography?.alignment || '', {
-          nonNullable: true,
           validators: [Validators.required],
         }),
         publisher: this.#fb.control(this.hero()?.biography?.publisher || '', {
-          nonNullable: true,
-          validators: [Validators.required],
+          validators: [Validators.required, Validators.minLength(5)],
         }),
         firstAppearance: this.#fb.control(
           this.hero()?.biography?.firstAppearance || '',
-          { nonNullable: true, validators: [Validators.required] },
+          { validators: [Validators.required, Validators.minLength(5)] },
         ),
       }),
       work: this.#fb.group({
         occupation: this.#fb.control(this.hero()?.work?.occupation || '', {
-          nonNullable: true,
-          validators: [Validators.required],
+          validators: [Validators.required, Validators.minLength(5)],
         }),
       }),
     });
