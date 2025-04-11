@@ -6,6 +6,10 @@ export const routes: Routes = [
     loadComponent: () => import('./pages').then((m) => m.HeroListPageComponent),
   },
   {
+    path: 'new',
+    loadComponent: () => import('./pages').then((m) => m.HeroEditPageComponent),
+  },
+  {
     path: ':id/edit',
     loadComponent: () => import('./pages').then((m) => m.HeroEditPageComponent),
   },
