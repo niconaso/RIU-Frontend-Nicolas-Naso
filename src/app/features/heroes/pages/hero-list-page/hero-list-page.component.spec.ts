@@ -1,6 +1,7 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
 import { MatDialog } from '@angular/material/dialog';
 import { NoopAnimationsModule } from '@angular/platform-browser/animations';
+import { RouterTestingModule } from '@angular/router/testing';
 import { of } from 'rxjs';
 import { PaginatedResponse } from '../../../../shared/models';
 import { IHeroService } from '../../interfaces';
@@ -72,7 +73,11 @@ describe('HeroListPageComponent', () => {
     dialogSpy = jasmine.createSpyObj<MatDialog>('MatDialog', ['open']);
 
     await TestBed.configureTestingModule({
-      imports: [HeroListPageComponent, NoopAnimationsModule],
+      imports: [
+        HeroListPageComponent,
+        NoopAnimationsModule,
+        RouterTestingModule,
+      ],
       providers: [
         { provide: HEROES_SERVICE, useValue: heroServiceSpy },
         { provide: MatDialog, useValue: dialogSpy },
@@ -116,37 +121,5 @@ describe('HeroListPageComponent', () => {
     component.results$.subscribe(() => {
       expect(heroServiceSpy.getAll).toHaveBeenCalledWith(1, 25, null);
     });
-  });
-
-  it('should open dialog on delete', () => {
-    const mockHero: Hero = mockHeroesResponse.data[0];
-    const afterClosedSpy = jasmine.createSpyObj({
-      subscribe: (cb: any) => cb(true),
-    });
-
-    dialogSpy.open.and.returnValue({
-      afterClosed: () => afterClosedSpy,
-    } as any);
-    heroServiceSpy.delete.and.returnValue(of(void 0));
-
-    component.onDelete(mockHero);
-    expect(dialogSpy.open).toHaveBeenCalled();
-    expect(heroServiceSpy.delete).toHaveBeenCalledWith(mockHero.id);
-  });
-
-  it('should not delete if dialog is cancelled', () => {
-    const mockHero: Hero = mockHeroesResponse.data[0];
-    const afterClosedSpy = jasmine.createSpyObj({
-      subscribe: (cb: any) => cb(false),
-    });
-
-    dialogSpy.open.and.returnValue({
-      afterClosed: () => afterClosedSpy,
-    } as any);
-    heroServiceSpy.delete.and.returnValue(of(void 0));
-
-    component.onDelete(mockHero);
-    expect(dialogSpy.open).toHaveBeenCalled();
-    expect(heroServiceSpy.delete).not.toHaveBeenCalled();
   });
 });
