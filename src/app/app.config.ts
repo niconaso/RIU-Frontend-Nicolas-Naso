@@ -12,7 +12,7 @@ import { environment } from '../environments/environment';
 import { routes } from './app.routes';
 import { loadingInterceptor } from './core/interceptors';
 import { HEROES_SERVICE, HeroService } from './features/heroes/services/';
-import { HeroMockService } from './features/heroes/services/mock/hero-mock.service';
+import { HeroInmemoryMockService } from './features/heroes/services/mock/hero-in-memory-mock.service';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -23,8 +23,8 @@ export const appConfig: ApplicationConfig = {
     {
       provide: HEROES_SERVICE,
       useFactory: () =>
-        environment.http.useMockData
-          ? new HeroMockService()
+        environment.http.inMemoryBackend
+          ? new HeroInmemoryMockService()
           : new HeroService(),
     },
 

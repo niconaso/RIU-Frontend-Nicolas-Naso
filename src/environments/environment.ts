@@ -5,8 +5,8 @@
 export const environment = {
   production: false,
   http: {
-    api: 'https://localhost:3000',
-    useMockData: true,
+    api: 'http://localhost:3000',
+    inMemoryBackend: true,
   },
 };
 
