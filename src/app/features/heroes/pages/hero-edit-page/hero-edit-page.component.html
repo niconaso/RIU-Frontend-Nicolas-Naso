@@ -1,0 +1,20 @@
+<div>
+  <div class="w-full md:w-4/5 m-auto">
+    <h1 class="text-2xl mb-2">
+      @if ((heroe$ | async)?.name) {
+        Editing Hero {{ (heroe$ | async)?.name }}
+      } @else {
+        Create New Hero
+      }
+    </h1>
+    <app-hero-form [hero]="heroe$ | async" (save)="onSave($event)">
+      <a
+        mat-stroked-button
+        cancel-button
+        matTooltip="Cancel changes"
+        [routerLink]="['/heroes']"
+        >Cancel</a
+      >
+    </app-hero-form>
+  </div>
+</div>

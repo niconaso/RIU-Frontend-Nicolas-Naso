@@ -1,0 +1,13 @@
+<div class="flex flex-wrap gap-4">
+  @for (hero of heroes(); track hero.id) {
+    <app-hero
+      class="min-w-full md:min-w-0"
+      [hero]="hero"
+      (delete)="delete.emit($event)"
+    ></app-hero>
+  } @empty {
+    <app-empty-state class="w-full">
+      <p class="text-center">There are no heroes</p>
+    </app-empty-state>
+  }
+</div>

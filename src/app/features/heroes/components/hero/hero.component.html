@@ -1,0 +1,65 @@
+<mat-card class="min-w-80 size-100 md:size-80 flex flex-col justify-between">
+  <mat-card-header class="flex flex-row justify-between">
+    <div class="flex flex-row justify-start items-center flex-1">
+      @if (hero().images) {
+        <img
+          mat-card-avatar
+          class="mr-3"
+          width="160"
+          height="240"
+          priority
+          [alt]="hero().name"
+          [ngSrc]="hero().images.sm"
+        />
+      } @else {
+        <img
+          mat-card-avatar
+          class="mr-3"
+          width="160"
+          height="240"
+          priority
+          ngSrc="https://placehold.co/160x240"
+          [alt]="'No image'"
+        />
+      }
+
+      <div>
+        <mat-card-title>{{ hero().name }} </mat-card-title>
+        <mat-card-subtitle>{{ hero().biography.fullName }}</mat-card-subtitle>
+      </div>
+    </div>
+
+    <button
+      mat-icon-button
+      matTooltip="Delete: {{ hero().name }}"
+      (click)="onDelete(this.hero())"
+    >
+      <mat-icon>delete</mat-icon>
+    </button>
+  </mat-card-header>
+
+  <mat-card-content class="flex-1 overflow-auto">
+    <div class="py-4">
+      <p>
+        <strong>Alignment:</strong> {{ hero().biography.alignment | titlecase }}
+      </p>
+      <p><strong>Publisher:</strong> {{ hero().biography.publisher }}</p>
+      <p>
+        <strong>First Appearance:</strong>
+        {{ hero().biography.firstAppearance }}
+      </p>
+      <p><strong>Occupation:</strong> {{ hero().work.occupation }}</p>
+    </div>
+  </mat-card-content>
+  <mat-card-actions align="end">
+    <a
+      mat-button
+      [routerLink]="[hero().id, 'edit']"
+      matTooltip="Edit: {{ hero().name }}"
+    >
+      Edit
+    </a>
+  </mat-card-actions>
+</mat-card>
+
+<ng-template #avatarTpl let-image let-name> </ng-template>
