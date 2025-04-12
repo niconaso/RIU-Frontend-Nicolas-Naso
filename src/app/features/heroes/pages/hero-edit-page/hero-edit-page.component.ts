@@ -10,7 +10,7 @@ import {
 import { MatButtonModule } from '@angular/material/button';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { Router, RouterModule } from '@angular/router';
-import { Observable, tap } from 'rxjs';
+import { Observable, shareReplay, take } from 'rxjs';
 import { HeroFormComponent } from '../../components';
 import { IHeroService } from '../../interfaces';
 import { Hero } from '../../models';
@@ -39,7 +39,7 @@ export class HeroEditPageComponent implements OnInit {
   heroe$!: Observable<Hero>;
 
   ngOnInit(): void {
-    this.heroe$ = this.#heroService.get(this.id);
+    this.heroe$ = this.#heroService.get(this.id).pipe(shareReplay());
   }
 
   onSave(hero: Partial<Hero>) {
@@ -48,11 +48,7 @@ export class HeroEditPageComponent implements OnInit {
       : this.#heroService.create(hero);
 
     saveOrUpdate$
-      .pipe(
-        tap(() => {
-          this.#router.navigateByUrl('/heroes');
-        }),
-      )
-      .subscribe();
+      .pipe(take(1))
+      .subscribe(() => this.#router.navigateByUrl('/heroes'));
   }
 }
