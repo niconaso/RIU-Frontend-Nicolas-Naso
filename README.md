@@ -4,6 +4,32 @@ This project is based on a Single Page Application (SPA) developed with Angular 
 It includes functionalities to create, read, update, and delete (CRUD) heroes, along with a paginated and filterable list view.  
 The project was developed as part of a frontend technical challenge, implementing reusable services, reactive forms, routing, and unit testing using the latest LTS version of Angular.
 
+## Requirements
+
+To run and develop this project locally, make sure you have the following installed:
+
+- [Node.js (LTS)](https://nodejs.org/) — Recommended: latest LTS version
+- [Angular CLI](https://angular.io/cli) — Installed globally via `npm install -g @angular/cli`
+- [Docker](https://www.docker.com/) — _(Optional)_ For containerization and deployment
+- A modern web browser — Recommended: Chrome, Firefox, or Edge
+
+## Installation
+
+Follow these steps to set up the project locally for development and build:
+
+### 1. Clone the Repository
+
+```bash
+git clone https://github.com/niconaso/RIU-Frontend-Nicolas-Naso.git
+cd riu-heroes-manager
+```
+
+### 2. Instal dependencies
+
+```bash
+npm install
+```
+
 ## Development server
 
 Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The application will automatically reload if you change any of the source files.
