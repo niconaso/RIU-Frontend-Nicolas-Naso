@@ -75,7 +75,7 @@ http:locahost:8000
 
 ## Datasource
 
-The app supports 3 types of data sources in order to test the application during the development procress.
+The app supports 3 types of data sources in order to test the application during the **development** procress.
 
 The `environment.ts` file contain a `dataSource` property that can be modified using one of this 3 values:
 
@@ -83,12 +83,13 @@ The `environment.ts` file contain a `dataSource` property that can be modified u
 - _json-server_: all the operations (GET, PUT, POST, DELETE) are made using a 'json-server' server that could be initiated using
 - _in-memory_: all the operations (GET, PUT, POST, DELETE) are made in memory using a Javascript array with all the loaded Heroes.
 
-If you choose to use `json-server` as the mock backend for serving superhero data,  
-you need to run the following command in a separate terminal:
+If you choose to use `json-server` data source you will need to run the following command in a separate terminal:
 
 ```bash
 npm run server:mock
 ```
+
+By default `json-server` data source is set for the `development` environment.
 
 ## Considerations
 
@@ -104,3 +105,11 @@ npm run server:mock
 - [**Commitlint**](https://commitlint.js.org/) — Ensures that commit messages follow a conventional format (e.g., Conventional Commits), useful for automation and changelogs.
 
 These tools help enforce code quality, consistency, and reliable versioning across the team and development lifecycle.
+
+## Data Model Reference
+
+The structure of the Hero model used in this application is based on the public API from:
+
+🔗 [Akabab Superhero API](https://akabab.github.io/superhero-api/api)
+
+This model provided a comprehensive reference for defining hero-related attributes such as name, powerstats, appearance, biography, and more.
