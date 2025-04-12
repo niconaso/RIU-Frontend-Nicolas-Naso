@@ -7,7 +7,7 @@ import { IHeroService } from '../interfaces';
 import { Hero } from '../models';
 
 @Injectable()
-export class HeroService implements IHeroService {
+export class HeroAPIService implements IHeroService {
   #http: HttpClient = inject(HttpClient);
 
   getAll(
@@ -19,12 +19,12 @@ export class HeroService implements IHeroService {
 
     let params: HttpParams = new HttpParams()
       // json-server starts in page 1
-      .set('_page', (pageIndex + 1).toString())
+      .set('_page', pageIndex.toString())
       .set('_limit', pageSize.toString())
       .set('_per_page', pageSize.toString());
 
     if (filterBy) {
-      params = params.set('name_like', filterBy);
+      params = params.set('name', filterBy);
     }
     return this.#http
       .get<any>(url, {
