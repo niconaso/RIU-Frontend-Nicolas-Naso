@@ -1,7 +1,7 @@
 export const environment = {
   production: true,
   http: {
-    api: 'https://api.riu.com',
-    inMemoryBackend: true,
+    api: 'http://localhost:3000',
+    dataSource: 'in-memory', // 'in-memory' | 'json-server' | 'api',
   },
 };

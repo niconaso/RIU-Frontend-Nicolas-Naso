@@ -1,13 +1,13 @@
 import { HttpClient, HttpParams } from '@angular/common/http';
 import { inject, Injectable } from '@angular/core';
 import { map, Observable } from 'rxjs';
-import { environment } from '../../../../environments/environment';
-import { PaginatedResponse } from '../../../shared/models';
-import { IHeroService } from '../interfaces';
-import { Hero } from '../models';
+import { environment } from '../../../../../environments/environment';
+import { PaginatedResponse } from '../../../../shared/models';
+import { IHeroService } from '../../interfaces';
+import { Hero } from '../../models';
 
 @Injectable()
-export class HeroService implements IHeroService {
+export class HeroJsonServerService implements IHeroService {
   #http: HttpClient = inject(HttpClient);
 
   getAll(

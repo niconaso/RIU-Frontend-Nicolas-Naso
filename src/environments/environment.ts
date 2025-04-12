@@ -6,7 +6,7 @@ export const environment = {
   production: false,
   http: {
     api: 'http://localhost:3000',
-    inMemoryBackend: true,
+    dataSource: 'json-server', // 'in-memory' | 'json-server' | 'api',
   },
 };
 

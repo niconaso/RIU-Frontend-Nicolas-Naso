@@ -9,10 +9,10 @@ import { provideHttpClient, withInterceptors } from '@angular/common/http';
 import { MAT_FORM_FIELD_DEFAULT_OPTIONS } from '@angular/material/form-field';
 import { provideAnimationsAsync } from '@angular/platform-browser/animations/async';
 import { environment } from '../environments/environment';
+import { provideSetupDataSource } from './app.data-source';
 import { routes } from './app.routes';
 import { loadingInterceptor } from './core/interceptors';
-import { HEROES_SERVICE, HeroService } from './features/heroes/services/';
-import { HeroInmemoryMockService } from './features/heroes/services/mock/hero-in-memory-mock.service';
+import { DataSource } from './shared/types';
 
 export const appConfig: ApplicationConfig = {
   providers: [
@@ -20,14 +20,7 @@ export const appConfig: ApplicationConfig = {
     provideRouter(routes, withComponentInputBinding(), withViewTransitions()),
     provideAnimationsAsync(),
     provideHttpClient(withInterceptors([loadingInterceptor])),
-    {
-      provide: HEROES_SERVICE,
-      useFactory: () =>
-        environment.http.inMemoryBackend
-          ? new HeroInmemoryMockService()
-          : new HeroService(),
-    },
-
+    provideSetupDataSource(environment.http.dataSource as DataSource),
     {
       provide: MAT_FORM_FIELD_DEFAULT_OPTIONS,
       useValue: {
