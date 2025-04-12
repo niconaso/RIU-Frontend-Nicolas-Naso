@@ -1,22 +1,30 @@
-import { Injectable } from '@angular/core';
-import { BehaviorSubject, map, Observable, of } from 'rxjs';
+import { inject, Injectable } from '@angular/core';
+import { BehaviorSubject, delay, map, Observable, of, tap } from 'rxjs';
 import HEROES from '../../../../../../public/data/heroes.json';
+import { LoadingService } from '../../../../core/services';
 import { PaginatedResponse } from '../../../../shared/models';
 import { IHeroService } from '../../interfaces';
 import { Hero } from '../../models';
 
 @Injectable()
-export class HeroMockService implements IHeroService {
+export class HeroInmemoryMockService implements IHeroService {
   #heroes: BehaviorSubject<Hero[]> = new BehaviorSubject<Hero[]>(
-    HEROES as Hero[],
+    HEROES.heroes as Hero[],
   );
+
+  #loadingService = inject(LoadingService);
+
+  readonly DELAY: number = 1000;
 
   getAll(
     pageIndex: number,
     pageSize: number,
     filterBy?: string | null,
   ): Observable<PaginatedResponse<Hero>> {
+    this.#loadingService.show();
+
     return this.#heroes.asObservable().pipe(
+      delay(this.DELAY),
       map((heroes) =>
         !filterBy
           ? heroes
@@ -27,9 +35,10 @@ export class HeroMockService implements IHeroService {
             ),
       ),
       map((heroes: Hero[]) => ({
-        results: heroes.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize),
+        data: heroes.slice(pageIndex * pageSize, (pageIndex + 1) * pageSize),
         total: heroes.length,
       })),
+      tap(() => this.#loadingService.hide()),
     );
   }
   /**
@@ -63,9 +72,11 @@ export class HeroMockService implements IHeroService {
 
     return of(updatedHero);
   }
-  delete(id: number): Observable<void> {
+  delete(id: number): Observable<any> {
+    this.#loadingService.show();
+
     this.#heroes.next(this.#heroes.getValue().filter((h) => h.id !== id));
 
-    return of();
+    return of(delay(this.DELAY));
   }
 }
