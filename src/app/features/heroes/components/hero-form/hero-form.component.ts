@@ -2,10 +2,12 @@ import { CommonModule } from '@angular/common';
 import {
   ChangeDetectionStrategy,
   Component,
+  EventEmitter,
   inject,
-  input,
-  OnInit,
-  output,
+  Input,
+  OnChanges,
+  Output,
+  SimpleChanges,
 } from '@angular/core';
 import {
   FormBuilder,
@@ -40,40 +42,41 @@ import { Hero } from '../../models';
   styleUrl: './hero-form.component.scss',
   changeDetection: ChangeDetectionStrategy.OnPush,
 })
-export class HeroFormComponent implements OnInit {
-  hero = input<Hero | null>(null);
-  save = output<Partial<Hero>>();
-
-  form!: FormGroup;
+export class HeroFormComponent implements OnChanges {
+  @Input() hero: Hero | null = null;
+  @Output() save = new EventEmitter<Partial<Hero>>();
 
   #fb = inject(FormBuilder);
 
-  ngOnInit() {
-    this.form = this.#fb.group({
-      name: this.#fb.control(this.hero()?.name || '', {
+  form: FormGroup = this.#fb.group({
+    name: this.#fb.control('', {
+      validators: [Validators.required, Validators.minLength(3)],
+    }),
+    biography: this.#fb.group({
+      fullName: this.#fb.control('', {
         validators: [Validators.required, Validators.minLength(3)],
       }),
-      biography: this.#fb.group({
-        fullName: this.#fb.control(this.hero()?.biography?.fullName || '', {
-          validators: [Validators.required, Validators.minLength(3)],
-        }),
-        alignment: this.#fb.control(this.hero()?.biography?.alignment || '', {
-          validators: [Validators.required],
-        }),
-        publisher: this.#fb.control(this.hero()?.biography?.publisher || '', {
-          validators: [Validators.required, Validators.minLength(5)],
-        }),
-        firstAppearance: this.#fb.control(
-          this.hero()?.biography?.firstAppearance || '',
-          { validators: [Validators.required, Validators.minLength(5)] },
-        ),
+      alignment: this.#fb.control('', {
+        validators: [Validators.required],
       }),
-      work: this.#fb.group({
-        occupation: this.#fb.control(this.hero()?.work?.occupation || '', {
-          validators: [Validators.required, Validators.minLength(5)],
-        }),
+      publisher: this.#fb.control('', {
+        validators: [Validators.required, Validators.minLength(5)],
       }),
-    });
+      firstAppearance: this.#fb.control('', {
+        validators: [Validators.required, Validators.minLength(5)],
+      }),
+    }),
+    work: this.#fb.group({
+      occupation: this.#fb.control('', {
+        validators: [Validators.required, Validators.minLength(5)],
+      }),
+    }),
+  });
+
+  ngOnChanges(changes: SimpleChanges): void {
+    if (changes['hero'].currentValue != null) {
+      this.form?.patchValue(this.flattenHero(changes['hero'].currentValue));
+    }
   }
 
   submit() {
@@ -84,12 +87,27 @@ export class HeroFormComponent implements OnInit {
     const { name, biography, work } = this.form.value;
 
     const hero: Partial<Hero> = {
-      ...this.hero(),
+      ...this.hero,
       name,
       biography,
       work,
     };
 
     this.save.emit(hero);
+  }
+
+  private flattenHero(hero: Hero): any {
+    return {
+      name: hero.name,
+      biography: {
+        fullName: hero.biography?.fullName || '',
+        alignment: hero.biography?.alignment || '',
+        publisher: hero.biography?.publisher || '',
+        firstAppearance: hero.biography?.firstAppearance || '',
+      },
+      work: {
+        occupation: hero.work?.occupation || '',
+      },
+    };
   }
 }
