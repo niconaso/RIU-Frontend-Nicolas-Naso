@@ -83,6 +83,13 @@ The `environment.ts` file contain a `dataSource` property that can be modified u
 - _json-server_: all the operations (GET, PUT, POST, DELETE) are made using a 'json-server' server that could be initiated using
 - _in-memory_: all the operations (GET, PUT, POST, DELETE) are made in memory using a Javascript array with all the loaded Heroes.
 
+If you choose to use `json-server` as the mock backend for serving superhero data,  
+you need to run the following command in a separate terminal:
+
+```bash
+npm run server:mock
+```
+
 ## Considerations
 
 ### Core Frameworks & Libraries
