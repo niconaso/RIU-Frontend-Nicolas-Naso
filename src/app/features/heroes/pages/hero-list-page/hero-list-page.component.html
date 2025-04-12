@@ -18,7 +18,7 @@
 
 <app-hero-list
   class="my-4"
-  [heroes]="(results$ | async)?.results!"
+  [heroes]="(results$ | async)?.data!"
   (delete)="onDelete($event)"
 />
 
@@ -27,8 +27,8 @@
     class="sticky bottom-4 z-10"
     aria-label="Select page"
     [length]="(results$ | async)?.total || 0"
-    [pageIndex]="pageIndex$ | async"
-    [pageSize]="pageSize$ | async"
+    [pageIndex]="pageIndex"
+    [pageSize]="pageSize"
     [pageSizeOptions]="[5, 10, 25, 100]"
     (page)="onPageChange($event)"
   >

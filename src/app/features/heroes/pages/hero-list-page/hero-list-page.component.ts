@@ -11,7 +11,13 @@ import { MatDialog, MatDialogModule } from '@angular/material/dialog';
 import { MatPaginatorModule } from '@angular/material/paginator';
 import { MatTooltipModule } from '@angular/material/tooltip';
 import { RouterModule } from '@angular/router';
-import { BehaviorSubject, combineLatest, switchMap } from 'rxjs';
+import {
+  BehaviorSubject,
+  combineLatest,
+  shareReplay,
+  switchMap,
+  take,
+} from 'rxjs';
 import { ConfirmDialogComponent } from '../../../../shared/components';
 import { SearchbarComponent } from '../../../../shared/components/searchbar/searchbar.component';
 import { HeroListComponent } from '../../components';
@@ -46,20 +52,24 @@ export class HeroListPageComponent {
     .asObservable()
     .pipe(takeUntilDestroyed(this.#destroyRef));
 
-  pageSizeBS = new BehaviorSubject<number>(10);
-  pageSize$ = this.pageSizeBS.asObservable();
+  pageIndex = 0;
+  pageSize = 10;
 
-  pageIndexBS = new BehaviorSubject<number>(0);
-  pageIndex$ = this.pageIndexBS.asObservable();
+  #onPageChangeBs = new BehaviorSubject<{
+    pageIndex: number;
+    pageSize: number;
+  }>({
+    pageIndex: this.pageIndex,
+    pageSize: this.pageSize,
+  });
 
-  results$ = combineLatest([
-    this.#filterBy$,
-    this.pageSize$,
-    this.pageIndex$,
-  ]).pipe(
-    switchMap(([filterBy, pageSize, pageIndex]) =>
+  #onPageChange$ = this.#onPageChangeBs.asObservable();
+
+  results$ = combineLatest([this.#onPageChange$, this.#filterBy$]).pipe(
+    switchMap(([{ pageIndex, pageSize }, filterBy]) =>
       this.#heroService.getAll(pageIndex, pageSize, filterBy),
     ),
+    shareReplay(),
   );
 
   onDelete(hero: Hero) {
@@ -82,14 +92,13 @@ export class HeroListPageComponent {
   }
 
   onPageChange(event: any) {
-    this.pageIndexBS.next(event.pageIndex);
-    this.pageSizeBS.next(event.pageSize);
+    this.#onPageChangeBs.next({
+      pageIndex: event.pageIndex,
+      pageSize: event.pageSize,
+    });
   }
 
   private deleteHero(hero: Hero) {
-    this.#heroService
-      .delete(hero.id)
-      .pipe(takeUntilDestroyed(this.#destroyRef))
-      .subscribe();
+    this.#heroService.delete(hero.id).pipe(take(1)).subscribe();
   }
 }
